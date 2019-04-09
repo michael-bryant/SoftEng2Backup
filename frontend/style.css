@@ -1,0 +1,59 @@
+body{
+	margin:0;
+	color:white;
+	background-color:black;
+}
+
+sidebar{	
+	margin:0pt;
+	padding:5pt;
+	left:0;
+	position:fixed;
+	height:100%;
+	width:25%;
+	color:blue;
+	background-color:gray;
+	height:100%;
+	display:block;
+	box-sizing:border-box;
+}
+
+message_input {
+	display: flex;
+	position: fixed;
+	width: 75%;
+	right: 0pt;
+	bottom: 0pt;
+}
+
+input[type=text] {
+	flex: 2;
+	position: static;
+	padding: 10pt;
+	margin: 3pt;
+	font-size: 15pt;
+	border-radius: 20pt;
+	color: gray;
+	background-color: lightgray;
+}
+
+button {
+	position: static;
+	width: 120pt;
+	font-size: 15pt;
+	padding: 10pt;
+	border-radius: 20pt;
+	color: black;
+	background-color: gray;
+}
+
+messages{
+	margin:0;
+	padding:5pt;
+	position:absolute;
+	right:0;
+	height:100%;
+	width:75%;
+	display:block;
+	box-sizing:border-box;
+}
