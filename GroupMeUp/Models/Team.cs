@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Team_Manager
+namespace GroupMeUp.Models
 {
     class Team
     {
