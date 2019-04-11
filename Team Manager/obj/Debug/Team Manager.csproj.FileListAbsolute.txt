@@ -1,6 +1,0 @@
-c:\users\linco\documents\visual studio 2015\Projects\Team Manager\Team Manager\bin\Debug\Team Manager.exe.config
-C:\Users\linco\documents\visual studio 2015\Projects\Team Manager\Team Manager\obj\Debug\Team Manager.csprojResolveAssemblyReference.cache
-C:\Users\linco\Documents\Visual Studio 2015\Projects\SoftEng2Project\Team Manager\bin\Debug\Team Manager.exe.config
-C:\Users\linco\Documents\Visual Studio 2015\Projects\SoftEng2Project\Team Manager\obj\Debug\Team Manager.csprojResolveAssemblyReference.cache
-C:\Users\linco\Documents\Visual Studio 2015\Projects\SoftEng2Project\Team Manager\obj\Debug\Team_Manager.Properties.Resources.resources
-C:\Users\linco\Documents\Visual Studio 2015\Projects\SoftEng2Project\Team Manager\obj\Debug\Team Manager.csproj.GenerateResource.Cache
