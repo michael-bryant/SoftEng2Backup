@@ -10,6 +10,7 @@ namespace GroupMeUp.Models
     {
         public string text;
         public int userID;
+        public int teamID;
         public DateTime time;
     }
 }

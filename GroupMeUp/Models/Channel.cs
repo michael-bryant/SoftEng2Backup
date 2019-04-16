@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GroupMeUp.Models
 {
-    class Channel
+    public class Channel
     {
-        SortedList<int,Message> messages;
+        private SortedList<int,Message> messages;
 
         public Channel()
         {

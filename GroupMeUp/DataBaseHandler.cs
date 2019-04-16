@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Data;
+using GroupMeUp.Models;
 
 public class DataBaseHandler
 {
 	public DataBaseHandler()
 	{
         //Gets the authority level of a user
-        String getUserAuth(int userID)
+        role getUserAuth(int userID)
         {
             //Get data base
             string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
             con.Open();
-
+            
             //temp var
-            String position = null;
+            role position = role.USER;
             char pos;
 
             if (con.State == ConnectionState.Open)
@@ -27,43 +28,43 @@ public class DataBaseHandler
                 pos = (char)user_auth.ExecuteScalar();
 
                 if (pos.Equals('a'))
-                    position = "admin";
+                    position = role.ADMIN;
                 else if (pos.Equals('u'))
-                    position = "user";
+                    position = role.USER;
                 else if (pos.Equals('o'))
-                    position = "owner";
+                    position = role.OWNER;
                 else
-                    position = "error";
+                    position = role.USER;
                   
             }
             return position;
         }
 
         //gets all messages for a certain team
-        void getMessage(int teamID)
+        Message getMessage(int teamID)
         {
             string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
             con.Open();
 
             //temp var
-            String message;
+            Message message = new Message();
 
             if (con.State == ConnectionState.Open)
             {
 
-                SqlCommand get_message = new SqlCommand("SELECT body FROM [Messages] WHERE teamID ='"
-                    + messageID + "'", con);
+                SqlCommand get_message = new SqlCommand("SELECT body,UseruserID,TeamteamID FROM [Messages] WHERE teamID ='"
+                    + teamID + "'", con);
 
-                message = (String)get_message.ExecuteScalar();
-
-                /********************
-                 *  HOWEVER THE FUCK WE PRINT THE SHIT
-                 * *****************/
+                SqlDataReader reader = get_message.ExecuteReader();
+                message.text = (String)reader.GetValue(1);
+                message.userID = (int)reader.GetValue(2);
+                message.teamID = (int)reader.GetValue(3);
             }
+            return message;
         }
 
-        void addMessage(String mes, int teamID, int userID)
+        void addMessage(Message message)
         {
             string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
@@ -74,9 +75,9 @@ public class DataBaseHandler
                 String query = "INSERT INTO [Messages](teamID,userID,message) VALUES(@teamID,@userID,@message)";
                 SqlCommand cmd = new SqlCommand(query, con);
 
-                cmd.Parameters.AddWithValue("@teamID", teamID);
-                cmd.Parameters.AddWithValue("@userID", userID);
-                cmd.Parameters.AddWithValue("@message", message);
+                cmd.Parameters.AddWithValue("@teamID", message.teamID);
+                cmd.Parameters.AddWithValue("@userID", message.userID);
+                cmd.Parameters.AddWithValue("@message", message.text);
                 cmd.ExecuteNonQuery();
             }
             

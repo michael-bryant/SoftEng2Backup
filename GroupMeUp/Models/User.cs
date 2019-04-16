@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace GroupMeUp.Models
 {
-    enum role { USER,ADMIN,OWNER}
+    public enum role { USER,ADMIN,OWNER}
 
-    class User
+    public class User
     {
-        int userID;
-        string username;
-        int sessionID;
-        role permission;
+        public int userID;
+        public string username;
+        public int sessionID;
+        public role permission;
         private static int nextID = 1;
-        long ttl;
+        public long ttl;
 
         private int authenticate(string username, string password)
         {
