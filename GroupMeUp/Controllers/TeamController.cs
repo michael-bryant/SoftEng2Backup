@@ -11,6 +11,7 @@ namespace GroupMeUp.Controllers
     [RoutePrefix("api/teams")]
     public class TeamController : ApiController
     {
+        DataBaseHandler dbh = new DataBaseHandler();
         [Route("")]
         [HttpGet]
         public IEnumerable<Team> GetAllTeams()
@@ -23,6 +24,12 @@ namespace GroupMeUp.Controllers
         public Team GetByID(int teamID)
         {
             return null;
+        }
+
+        [Route("messages/{teamID:int}")]
+        public Message[] GetMessages(int teamID)
+        {
+            return dbh.getMessagesByTeam(teamID);
         }
     }
 }
