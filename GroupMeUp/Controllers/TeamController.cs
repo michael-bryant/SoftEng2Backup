@@ -27,8 +27,7 @@ namespace GroupMeUp.Controllers
         }
 
         [Route("messages/{teamID:int}")]
-        [HttpGet]
-        public IEnumerable<Message> GetMessages(int teamID)
+        public Message[] GetMessages(int teamID)
         {
             return dbh.getMessagesByTeam(teamID);
         }
