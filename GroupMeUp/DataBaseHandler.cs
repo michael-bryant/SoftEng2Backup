@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
-using System.Text.RegularExpressions;
 using System.Data;
-using System.TimeSpan;
+using GroupMeUp.Models;
+using System.Collections.Generic;
 
 public class DataBaseHandler
 {
+    string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
     public DataBaseHandler()
     {
 
@@ -20,15 +18,15 @@ public class DataBaseHandler
     //User
 
         //Gets the authority level of a user
-        String getUserAuth(int userID)
+        GroupMeUp.Models.role getUserAuth(int userID)
         {
             //Get data base
             string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
             con.Open();
 
-            //temp var
-            String position;
+        //temp var
+             GroupMeUp.Models.role position = GroupMeUp.Models.role.USER;
             char pos;
 
             if (con.State == ConnectionState.Open)
@@ -39,21 +37,21 @@ public class DataBaseHandler
 
                 pos = (char)user_auth.ExecuteScalar();
 
-                if (pos.Equals('a'))
-                    position = "admin";
-                else if (pos.Equals('u'))
-                    position = "user";
+            if (pos.Equals('a'))
+                position = GroupMeUp.Models.role.ADMIN;
+            else if (pos.Equals('u'))
+                position = GroupMeUp.Models.role.USER ;
                 else if (pos.Equals('o'))
-                    position = "owner";
+                    position = GroupMeUp.Models.role.OWNER;
                 else
-                    position = "error";
+                    position = GroupMeUp.Models.role.USER;
                   
             }
                 return position;
         }
 
         //add user
-        void addUser(String uN, String pass, time b, time e)
+        void addUser(String uN, String pass, TimeSpan b, TimeSpan e)
         {
             string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
@@ -78,7 +76,7 @@ public class DataBaseHandler
     //Team
 
         //add team
-        void addTeam(String tN, time b, time e)
+        void addTeam(String tN, TimeSpan b, TimeSpan e)
         {
             string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
@@ -121,27 +119,38 @@ public class DataBaseHandler
     //Messages
 
     //gets all messages for a certain team
-    void getMessage(int teamID)
+    Message[] getMessage(int teamID)
         {
             string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
             con.Open();
 
             //temp var
-            String message;
+            SqlDataReader messageReader;
 
-            if (con.State == ConnectionState.Open)
+        if (con.State == ConnectionState.Open)
+        {
+
+            SqlCommand get_message = new SqlCommand("SELECT * FROM [Messages] WHERE teamID ='"
+                + teamID + "'", con);
+
+
+            messageReader = get_message.ExecuteReader();
+
+            /********************
+             *  HOWEVER THE FUCK WE PRINT THE SHIT
+             * *****************/
+            SortedSet<Message> messages = new SortedSet<Message>();
+            while (messageReader.Read())
             {
-
-                SqlCommand get_message = new SqlCommand("SELECT body FROM [Messages] WHERE teamID ='"
-                    + teamID + "'", con);
-
-                message = (String)get_message.ExecuteScalar();
-
-                /********************
-                 *  HOWEVER THE FUCK WE PRINT THE SHIT
-                 * *****************/
+                Message newMessage = new Message();
+                newMessage.text = messageReader.GetString(2);
             }
+            Message[] retMessages = new Message[messages.Count];
+            messages.CopyTo(retMessages);
+            return retMessages;
+        }
+        else return null;
         }
 
         void addMessage(String mes, int teamID, int userID)
@@ -157,7 +166,7 @@ public class DataBaseHandler
 
                 cmd.Parameters.AddWithValue("@teamID", teamID);
                 cmd.Parameters.AddWithValue("@userID", userID);
-                cmd.Parameters.AddWithValue("@message", mess);
+                cmd.Parameters.AddWithValue("@message", mes);
                 cmd.ExecuteNonQuery();
             }
             
@@ -176,19 +185,19 @@ public class DataBaseHandler
 
             if (con.State == ConnectionState.Open)
             {
-                time eT;
-                time bT;
+                TimeSpan eT;
+                TimeSpan bT;
                 //begin
                 SqlCommand get_bTime = new SqlCommand("SELECT MAX(beggining) as bTime FROM User, Team, UserOnTeam " +
                     "WHERE User.userID = UserOnTeam.userID AND UserOnTeam.teamID = Team." + teamID + "", con);
 
-                bT = (time)get_bTime.ExecuteScalar();
+                bT = (TimeSpan)get_bTime.ExecuteScalar();
 
                 //end
                 SqlCommand get_eTime = new SqlCommand("SELECT MIN(end) as eTime FROM User, Team, UserOnTeam " +
                     "WHERE User.userID = UserOnTeam.userID AND UserOnTeam.teamID = Team." + teamID + "", con);
 
-                eT = (time)get_eTime.ExecuteScalar();
+                eT = (TimeSpan)get_eTime.ExecuteScalar();
 
                 //Update
                 String query = "UPDATE Team SET begining = @beginning, end = @end FROM Team WHERE teamID = " + teamID + "";
@@ -202,7 +211,7 @@ public class DataBaseHandler
         }
 
         //get a teams beggining meet up time
-        time getBegginingTime(int teamID)
+        TimeSpan getBegginingTime(int teamID)
         {
             string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
@@ -213,12 +222,13 @@ public class DataBaseHandler
                 SqlCommand get_bTime = new SqlCommand("SELECT beggining FROM Team " +
                     "WHERE teamID = " + teamID + "", con);
 
-               return (time)get_bTime.ExecuteScalar();
+               return (TimeSpan)get_bTime.ExecuteScalar();
             }
+        return new TimeSpan();
         }
 
         //get the end of a teams meet up time
-        time getEndTime(int teamID)
+        TimeSpan getEndTime(int teamID)
         {
             string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
@@ -229,7 +239,8 @@ public class DataBaseHandler
                 SqlCommand get_eTime = new SqlCommand("SELECT end FROM Team " +
                     "WHERE teamID = " + teamID + "", con);
 
-                return (time)get_eTime.ExecuteScalar();
+                return (TimeSpan)get_eTime.ExecuteScalar();
             }
+        return new TimeSpan();
         }
 }
