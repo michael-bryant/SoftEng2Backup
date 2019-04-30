@@ -211,7 +211,7 @@ public class DataBaseHandler
         }
 
         //get a teams beggining meet up time
-        TimeSpan getBegginingTime(int teamID)
+        TimeSpan getBeginningTime(int teamID)
         {
             string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
