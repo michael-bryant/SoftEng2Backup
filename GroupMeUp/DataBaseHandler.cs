@@ -21,7 +21,6 @@ public class DataBaseHandler
         GroupMeUp.Models.role getUserAuth(int userID)
         {
             //Get data base
-            string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
             con.Open();
 
@@ -53,7 +52,6 @@ public class DataBaseHandler
         //add user
         void addUser(String uN, String pass, TimeSpan b, TimeSpan e)
         {
-            string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
             con.Open();
 
@@ -78,7 +76,6 @@ public class DataBaseHandler
         //add team
         void addTeam(String tN, TimeSpan b, TimeSpan e)
         {
-            string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
             con.Open();
 
@@ -97,7 +94,6 @@ public class DataBaseHandler
         // add user on team
         void addUserOnTeam(int uID, int tID, String role)
         {
-            string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
             con.Open();
 
@@ -121,7 +117,6 @@ public class DataBaseHandler
     //gets all messages for a certain team
     Message[] getMessage(int teamID)
         {
-            string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
             con.Open();
 
@@ -155,7 +150,6 @@ public class DataBaseHandler
 
         void addMessage(String mes, int teamID, int userID)
         {
-            string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
             con.Open();
 
@@ -179,7 +173,6 @@ public class DataBaseHandler
         //for the meet up times
         void updateTimeFrame(int teamID)
         {
-            string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
             con.Open();
 
@@ -213,7 +206,6 @@ public class DataBaseHandler
         //get a teams beggining meet up time
         TimeSpan getBeginningTime(int teamID)
         {
-            string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
             con.Open();
 
@@ -230,7 +222,6 @@ public class DataBaseHandler
         //get the end of a teams meet up time
         TimeSpan getEndTime(int teamID)
         {
-            string conString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Big Boss\\Documents\\SowftwareENGR\\Connection\\Connection\\Database1.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(conString);
             con.Open();
 
