@@ -115,7 +115,7 @@ public class DataBaseHandler
     //Messages
 
     //gets all messages for a certain team
-    Message[] getMessage(int teamID)
+    public Message[] getMessagesByTeam(int teamID)
         {
             SqlConnection con = new SqlConnection(conString);
             con.Open();

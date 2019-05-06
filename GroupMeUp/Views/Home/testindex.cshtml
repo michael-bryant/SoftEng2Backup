@@ -1,0 +1,32 @@
+<head><link rel="stylesheet" href="homestyle.css"></head>
+<div class="jumbotron">
+    <h1>Team Up On Me</h1>
+    <p class="lead">A Messenging System</p>
+    <p>
+        @Html.TextArea("Messages")
+        <input id="showMessages" type="button" value="Current Messages" />
+    </p>
+</div>
+<div class="userInput">
+    <!--<div class="col-md-4">-->
+        <p>
+            Enter your name:
+            @Html.TextBox("myName")
+            <input id="getTeam" type="button" value="That's It" />
+        </p>
+    </div>
+    <!--<div class="col-md-4">-->
+        <p>
+            Enter your team name:
+            @Html.TextBox("teamName")
+            <input id="getTeam" type="button" value="That's It" />
+        </p>
+    </div>
+    <!--div class="">-->
+        <p>
+            Enter your a message to your team:
+            @Html.TextBox("message")
+            <input id="getMessage" type="button" value="That's It" />
+        </p>
+    </div>
+</div>

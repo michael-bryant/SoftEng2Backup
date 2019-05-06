@@ -1,31 +1,38 @@
-﻿<div class="jumbotron">
-    <h1>Team Up On Me</h1>
-    <p class="lead">A Messenging System</p>
-    <p>
-        @Html.TextArea("Messages")
-        <input id="showMessages" type="button" value="Current Messages" />
-    </p>
-</div>
-<div class="row">
-    <div class="col-md-4">
+﻿<head><link rel ="stylesheet" type="text/css" href ="homestyle.css"/></head>
+<body>
+    <div class="jumbotron">
+        <h1>Team Up On Me</h1>
+        <p class="lead">A Messenging System</p>
         <p>
-            Enter your name:
-            @Html.TextBox("myName")
-            <input id="getTeam" type="button" value="That's It" />
+            @Html.TextArea("Messages")
+            <input id="showMessages" type="button" value="Current Messages" />
         </p>
     </div>
-    <div class="col-md-4">
-        <p>
-            Enter your team name:
-            @Html.TextBox("teamName")
-            <input id="getTeam" type="button" value="That's It" />
-        </p>
+    <div class="row">
+        <div class="col-md-4">
+            <p>
+                Enter your name:
+                @Html.TextBox("myName")
+                <input id="getTeam" type="button" value="That's It" />
+            </p>
+        </div>
+        <div class="col-md-4">
+            <p>
+                Enter your team name:
+                @Html.TextBox("teamName")
+
+                <asp:Button ID="getTeam" OnClientClick="return getMessagesByTeam();"
+                            runat="server" OnClick="btnNewLogin_Click" Text="Fetch Team Chat"
+                            style="height: 26px" />
+                <!--<input id="getTeam" type="button" value="That's It" />-->
+            </p>
+        </div>
+        <div class="col-md-4">
+            <p>
+                Enter your a message to your team:
+                @Html.TextBox("message")
+                <input id="getMessage" type="button" value="That's It" />
+            </p>
+        </div>
     </div>
-    <div class="col-md-4">
-        <p>
-            Enter your a message to your team:
-            @Html.TextBox("message")
-            <input id="getMessage" type="button" value="That's It" />
-        </p>
-    </div>
-</div>
+</body>
